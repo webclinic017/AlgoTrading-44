@@ -1,37 +1,53 @@
-## Welcome to GitHub Pages
+## Welcome to AlgoTrading
 
-You can use the [editor on GitHub](https://github.com/victorsemeraro/AlgoTrading/edit/gh-pages/index.md) to maintain and preview the content for your website in Markdown files.
+- An open source project dedicated to delivering alpha
+- The most advanced, high performance backtesting engine
+- This project is sponsored by Vicarisi Ventures, a quantitative development company
+- To learn more, visit https://vicarisi.com/
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+### Getting Started 
 
-### Markdown
+The general steps are as followed: 
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+1. 
+
+### Initialize Client
 
 ```markdown
-Syntax highlighted code block
-
-# Header 1
-## Header 2
-### Header 3
-
-- Bulleted
-- List
-
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
+python code here
 ```
 
-For more details see [Basic writing and formatting syntax](https://docs.github.com/en/github/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax).
+### Fetch Historical Data
+```markdown
+python code here
+```
 
-### Jekyll Themes
+### Initialize Backtesting Parameters
+```markdown
+python code here
+```
 
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/victorsemeraro/AlgoTrading/settings/pages). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
+### Compute Backtesting Indicators
+```markdown
+python code here
+```
 
-### Support or Contact
+### Initialize Statistics
+```markdown
+python code here
+```
 
-Having trouble with Pages? Check out our [documentation](https://docs.github.com/categories/github-pages-basics/) or [contact support](https://support.github.com/contact) and we’ll help you sort it out.
+### Compute Backtest Results
+```markdown
+python code here
+```
+
+### Print Statistics
+```markdown
+python code here
+```
+
+### Visualize Results
+```markdown
+python code here
+```
