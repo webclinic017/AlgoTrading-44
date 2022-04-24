@@ -83,3 +83,25 @@ def plot_backtest_distribution(stats):
     ax4.set_title("Daily Close Backtest")
 
     return 0
+
+def plot_optimized_backtest_results(open, high, low, close, interval):
+    """
+    Displays Optimized Backtest Results
+    """
+
+    fig, ((ax1, ax2), (ax3, ax4)) = plt.subplots(2, 2)
+    fig.suptitle("Backtesting Engine")
+
+    ax1.plot(interval, open)
+    ax1.set_title("Daily Open")
+
+    ax2.plot(interval, high)
+    ax2.set_title("Daily High")
+
+    ax3.plot(interval, low)
+    ax3.set_title("Daily Low")
+
+    ax4.plot(interval, close)
+    ax4.set_title("Daily Close")
+
+    return 0

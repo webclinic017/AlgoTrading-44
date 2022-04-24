@@ -10,6 +10,7 @@ Feature Set:
 
     - Derive the profit / loss of a select indicator
     - Run time optimized with Numba
+    - Pairs Trading 
 
 3. Advanced Statistical Indicators
 
@@ -19,6 +20,10 @@ Feature Set:
     - Ordinary Least Squares Moving Average
     - Bayes Ridge Regression Moving Average
 
+    - Close to Close Volatility
+    - Overnight Volatility
+    - Intraday Volatility
+
 4. Alpha Generation
 
     - Monte Carlo Simuation
@@ -26,6 +31,7 @@ Feature Set:
 
 5. Trade Optimization
 
+    - Brute Force
     - Chandrupatla Method
     - Simulated Annealing
 

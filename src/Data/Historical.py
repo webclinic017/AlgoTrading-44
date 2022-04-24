@@ -34,19 +34,20 @@ def get_historical_data(client):
     past_date = past_date.strftime('%Y-%m-%d')
 
     response = requests.get(
-        'https://sandbox.tradier.com/v1/markets/history',
+        
+        'https://' + client.endpoint + '/v1/markets/history',
 
-    params = {
-        'symbol': client.ticker, 
-        'interval': 'daily', 
-        'start': past_date, 
-        'end': current_date,
-        },
+        params = {
+            'symbol': client.ticker, 
+            'interval': 'daily', 
+            'start': past_date, 
+            'end': current_date,
+            },
 
-    headers = {
-        'Authorization': 'Bearer ' + client.api_key, 
-        'Accept': 'application/json'
-        })
+        headers = {
+            'Authorization': 'Bearer ' + client.api_key, 
+            'Accept': 'application/json'
+            })
 
     json_response = response.json()
     length = len(json_response["history"]["day"])
