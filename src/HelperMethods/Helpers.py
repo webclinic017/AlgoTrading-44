@@ -11,7 +11,7 @@ def print_results(stats, names):
 
     for i in range(len(stats)):
 
-        if stats[i].trade_count > 0:
+        if len(stats[i].trade_results) > 0:
 
             stats[i].mean = np.mean(stats[i].trade_results)
             stats[i].std = np.std(stats[i].trade_results)

@@ -14,6 +14,8 @@ from Indicators.BayesRidge import get_bayes_ridge
 from HelperMethods.Helpers import print_results
 from HelperMethods.Helpers import plot_backtest_pnl, plot_backtest_distribution
 
+from .Volatility import plot_vol_metrics
+
 # Import Python Libraries
 import matplotlib.pyplot as plt
 
@@ -26,6 +28,7 @@ def individual_backtest(ohlc):
     period = 20
     projection = 0
     par = Parameters(period, projection)
+    plot_vol_metrics(ohlc, par)
 
     open = ohlc.open[period:]
     high = ohlc.high[period:]

@@ -1,6 +1,6 @@
 # Import Backtesting Module
 from Backtesting.Statistics import Statistics
-from Backtesting.Pairs import get_pairs_backtest
+from Backtesting.PairsBacktest import get_pairs_backtest
 
 # Import Statistical Indicators Module
 from Indicators.Parameters import Parameters
@@ -17,6 +17,8 @@ from HelperMethods.Helpers import plot_backtest_pnl, plot_backtest_distribution
 # Import Python Libraries
 import matplotlib.pyplot as plt
 
+from Examples.Volatility import plot_vol_metrics
+
 def pairs_backtest(ohlcA, ohlcB):
     """
     Computes Results for a Pairs Backtest
@@ -26,6 +28,7 @@ def pairs_backtest(ohlcA, ohlcB):
     period = 20
     projection = 0
     par = Parameters(period, projection)
+    plot_vol_metrics(ohlcA, par)
 
     openA = ohlcA.open[period:]
     highA = ohlcA.high[period:]
@@ -52,7 +55,7 @@ def pairs_backtest(ohlcA, ohlcB):
     least_squares_open = get_pairs_backtest(least_squares_open, openA[period:], least_squares_averageA, openB[period:], least_squares_averageB)
     least_squares_high = get_pairs_backtest(least_squares_high, highA[period:], least_squares_averageA, highB[period:], least_squares_averageB)
     least_squares_low = get_pairs_backtest(least_squares_low, lowA[period:], least_squares_averageA, lowB[period:], least_squares_averageB)
-    least_squares_close = get_pairs_backtest(least_squares_open, closeA[period:], least_squares_averageA, closeB[period:], least_squares_averageB)
+    least_squares_close = get_pairs_backtest(least_squares_close, closeA[period:], least_squares_averageA, closeB[period:], least_squares_averageB)
 
     # Step Seven: Print Statistics
     stats_list = [least_squares_open, least_squares_high, least_squares_low, least_squares_close]

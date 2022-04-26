@@ -24,22 +24,21 @@ if __name__ == "__main__":
         endpoint = "sandbox.tradier.com"
         api_key = "0qoGJZUqxFSc7zcBcAENRphluKVn"
         accountid = 0
-        ticker = "AAPL"
+        ticker = "SPY"
         months = 60
         client = Client(endpoint, api_key, accountid, ticker, months)
 
         # Step Two: Fetch Historical Data
         ohlcA = get_historical_data(client)
-        # individual_backtest(ohlcA)
+        individual_backtest(ohlcA)
 
-        ticker = "MSFT"
-        client = Client(endpoint, api_key, accountid, ticker, months)
-        ohlcB = get_historical_data(client)
+        # ticker = "VXX"
+        # client = Client(endpoint, api_key, accountid, ticker, months)
+        # ohlcB = get_historical_data(client)
+        # pairs_backtest(ohlcA, ohlcB)
 
-        pairs_backtest(ohlcA, ohlcB)
-
-        # lower = 20
-        # upper = 60
+        # lower = 5
+        # upper = 90
         # optimized_backtest(ohlcA, lower, upper, get_least_squares)
 
         return 0
