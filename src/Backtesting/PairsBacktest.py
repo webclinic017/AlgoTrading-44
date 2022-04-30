@@ -22,7 +22,7 @@ def get_short_pnl(entry, exit):
     return pnl
 
 @jit(nopython = True)
-def get_pairs_backtest(stats, pricesA, indicatorA, pricesB, indicatorB, contrarian = True):
+def get_pairs_backtest(stats, pricesA, indicatorA, pricesB, indicatorB, contrarian = False):
     """
     Returns the Profit / Loss of a Selected Indicator and Correlated Pairs
 

@@ -1,11 +1,35 @@
 import numpy as np
 from numba import jit 
+from sklearn.cluster import kmeans_plusplus
 
-@jit(nopython = True)
 def get_volatilty_methods(ohlc, period):
     """
     Compute all Volatility Metrics
     """
+
+    hv, ov, iv = vol_methods(ohlc, period)
+
+    hv_clusters, _ = kmeans_plusplus(hv.reshape(-1, 1), n_clusters = 3, random_state = 0)
+    ov_clusters, _ = kmeans_plusplus(ov.reshape(-1, 1), n_clusters = 3, random_state = 0)
+    iv_clusters, _ = kmeans_plusplus(iv.reshape(-1, 1), n_clusters = 3, random_state = 0)
+
+    return hv, ov, iv, hv_clusters, ov_clusters, iv_clusters
+
+def get_vol_of_vol_methods(hv, ov, iv, period):
+    """
+    Compute all Volatility of Volatility Metrics
+    """
+
+    hvv, ivv, ovv = get_vol_of_vol(hv, ov, iv, period)
+
+    hv_clusters, _ = kmeans_plusplus(hvv.reshape(-1, 1), n_clusters = 3, random_state = 0)
+    ov_clusters, _ = kmeans_plusplus(ovv.reshape(-1, 1), n_clusters = 3, random_state = 0)
+    iv_clusters, _ = kmeans_plusplus(ivv.reshape(-1, 1), n_clusters = 3, random_state = 0)
+
+    return hvv, ivv, ovv, hv_clusters, ov_clusters, iv_clusters
+
+@jit(nopython = True)
+def vol_methods(ohlc, period):
 
     hv = h_vol(ohlc, period)
     ov = o_vol(ohlc, period)
@@ -20,10 +44,23 @@ def get_vol_of_vol(hv, iv, ov, period):
     """
 
     hvv = compute_vol_of_vol(hv, period)
-    ivv = compute_vol_of_vol(iv, period)
     ovv = compute_vol_of_vol(ov, period)
+    ivv = compute_vol_of_vol(iv, period)
 
-    return hvv, ivv, ovv 
+    return hvv, ovv, ivv 
+
+@jit(nopython = True)
+def get_correlation_vol(open, high, low, close, period):
+    """
+    Compute Volatility of Correlation
+    """
+
+    open = compute_vol_of_vol(open, period)
+    high = compute_vol_of_vol(high, period)
+    low = compute_vol_of_vol(low, period)
+    close = compute_vol_of_vol(close, period)
+
+    return open, high, low, close
 
 @jit(nopython = True, parallel = True)
 def h_vol(ohlc, period):

@@ -24,7 +24,7 @@ if __name__ == "__main__":
         endpoint = "sandbox.tradier.com"
         api_key = "0qoGJZUqxFSc7zcBcAENRphluKVn"
         accountid = 0
-        ticker = "SPY"
+        ticker = "NVDA"
         months = 60
         client = Client(endpoint, api_key, accountid, ticker, months)
 
@@ -32,7 +32,7 @@ if __name__ == "__main__":
         ohlcA = get_historical_data(client)
         individual_backtest(ohlcA)
 
-        # ticker = "VXX"
+        # ticker = "TXN"
         # client = Client(endpoint, api_key, accountid, ticker, months)
         # ohlcB = get_historical_data(client)
         # pairs_backtest(ohlcA, ohlcB)

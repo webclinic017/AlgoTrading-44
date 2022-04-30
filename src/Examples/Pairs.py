@@ -18,6 +18,7 @@ from HelperMethods.Helpers import plot_backtest_pnl, plot_backtest_distribution
 import matplotlib.pyplot as plt
 
 from Examples.Volatility import plot_vol_metrics
+from Examples.Correlation import plot_corr_metrics
 
 def pairs_backtest(ohlcA, ohlcB):
     """
@@ -29,6 +30,7 @@ def pairs_backtest(ohlcA, ohlcB):
     projection = 0
     par = Parameters(period, projection)
     plot_vol_metrics(ohlcA, par)
+    plot_corr_metrics(ohlcA, ohlcB, par)
 
     openA = ohlcA.open[period:]
     highA = ohlcA.high[period:]

@@ -23,6 +23,10 @@ Feature Set:
     - Close to Close Volatility
     - Overnight Volatility
     - Intraday Volatility
+    - Volatility of Volatility
+
+    - Correlation Matrix
+    - Volatility of Correlation
 
 4. Alpha Generation
 
