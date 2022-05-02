@@ -13,7 +13,7 @@ from Indicators.Parameters import Parameters
 
 from Examples.Volatility import plot_vol_metrics
 
-def brute_force_optimization(a, b, ohlc, indicator):
+def brute_force_optimization(a, b, ohlc, indicator, projection):
     """
     Returns the PnL of an interval of rolling periods
 
@@ -35,7 +35,6 @@ def brute_force_optimization(a, b, ohlc, indicator):
     for i in range(b - a):
 
         period = a + i
-        projection = 0
         par = Parameters(period, projection)
 
         # Volatility Clusters

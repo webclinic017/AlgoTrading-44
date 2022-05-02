@@ -8,16 +8,15 @@ from HelperMethods.Helpers import plot_optimized_backtest_results
 import numpy as np
 import matplotlib.pyplot as plt
 
-def optimized_backtest(ohlc, a, b, function):
+def optimized_backtest(ohlc, a, b, function, projection, isDisplay):
     """
     Finds the Maximum PnL for a Given Set of Backtests
     """
 
     interval = np.linspace(a, b, (b - a))
-    open, high, low, close = brute_force_optimization(a, b, ohlc, function)
+    open, high, low, close = brute_force_optimization(a, b, ohlc, function, projection)
 
-    plot_optimized_backtest_results(open, high, low, close, interval)
-
-    plt.show()
+    if isDisplay == True:
+        plot_optimized_backtest_results(open, high, low, close, interval)
 
     return 0

@@ -23,6 +23,9 @@ spec = [
 
 @jitclass(spec)
 class VolStats:
+    """
+    
+    """
 
     def __init__(self):
 

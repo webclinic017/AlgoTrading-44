@@ -23,44 +23,44 @@ from .Volatility import plot_vol_metrics
 # Import Python Libraries
 import matplotlib.pyplot as plt
 
-def individual_backtest(ohlc):
+def individual_backtest(ohlc, rolling_period, projection, isDisplay):
     """
     Computes Results for a Single Backtest
     """
 
     # Step Three: Initialize Parameters
-    period = 20
-    projection = 0
-    par = Parameters(period, projection)
+    par = Parameters(rolling_period, projection)
 
     # Volatility Clusters
-    plot_vol_metrics(ohlc, par)
-    VS = get_vol_clusters(ohlc, period)
+    if isDisplay == True:
+        plot_vol_metrics(ohlc, par)
 
-    open = ohlc.open[period:]
-    high = ohlc.high[period:]
-    low = ohlc.low[period:]
-    close = ohlc.close[period:]
+    VS = get_vol_clusters(ohlc, rolling_period)
+
+    open = ohlc.open[rolling_period:]
+    high = ohlc.high[rolling_period:]
+    low = ohlc.low[rolling_period:]
+    close = ohlc.close[rolling_period:]
 
     # Step Four: Calculate Indicators
-    long_cluster = 0
+    long_cluster = 1
     short_cluster = 2
     least_squares_average = get_least_squares(par, close)
     IndicatorsObj = Indicators(least_squares_average, VS.cvol, VS.cvol_clusters, VS.cvol_vol, VS.cvol_vol_clusters, long_cluster, short_cluster)
 
     # Step Five: Initialize Statistics
     lot_size = 1
-    least_squares_open = Statistics(lot_size, len(open[period:]), period)
-    least_squares_high = Statistics(lot_size, len(high[period:]), period)
-    least_squares_low = Statistics(lot_size, len(low[period:]), period)
-    least_squares_close = Statistics(lot_size, len(close[period:]), period)
+    least_squares_open = Statistics(lot_size, len(open[rolling_period:]), rolling_period)
+    least_squares_high = Statistics(lot_size, len(high[rolling_period:]), rolling_period)
+    least_squares_low = Statistics(lot_size, len(low[rolling_period:]), rolling_period)
+    least_squares_close = Statistics(lot_size, len(close[rolling_period:]), rolling_period)
 
     # Step Six: Run Backtest
     isContrarian = False
-    least_squares_open = get_vanilla_backtest(least_squares_open, open[period:], IndicatorsObj, period, isContrarian)
-    least_squares_high = get_vanilla_backtest(least_squares_high, high[period:], IndicatorsObj, period, isContrarian)
-    least_squares_low = get_vanilla_backtest(least_squares_low, low[period:], IndicatorsObj, period, isContrarian)
-    least_squares_close = get_vanilla_backtest(least_squares_close, close[period:], IndicatorsObj, period, isContrarian)
+    least_squares_open = get_vanilla_backtest(least_squares_open, open[rolling_period:], IndicatorsObj, rolling_period, isContrarian)
+    least_squares_high = get_vanilla_backtest(least_squares_high, high[rolling_period:], IndicatorsObj, rolling_period, isContrarian)
+    least_squares_low = get_vanilla_backtest(least_squares_low, low[rolling_period:], IndicatorsObj, rolling_period, isContrarian)
+    least_squares_close = get_vanilla_backtest(least_squares_close, close[rolling_period:], IndicatorsObj, rolling_period, isContrarian)
 
     # Step Seven: Print Statistics
     stats_list = [least_squares_open, least_squares_high, least_squares_low, least_squares_close]
@@ -69,9 +69,8 @@ def individual_backtest(ohlc):
 
     # Final Step !!!
     # Visualize Backtest Results
-    plot_backtest_pnl(stats_list)
-    plot_backtest_distribution(stats_list)
-
-    plt.show()
+    if isDisplay == True:
+        plot_backtest_pnl(stats_list)
+        plot_backtest_distribution(stats_list)
 
     return 0 

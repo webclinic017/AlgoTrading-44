@@ -3,6 +3,18 @@ import numpy as np
 from numba import jit
 
 @jit(nopython = True)
+def get_statistics():
+    """
+    Returns Backtest Statistics
+    1. Max Drawdown
+    2. Calmar Ratio
+    3. Sharpe Ratio
+    4. Sortino Ratio
+    """
+
+    return 0
+
+@jit(nopython = True)
 def calmar_ratio(pnl):
 
     calmar = np.zeros(len(pnl))
@@ -29,15 +41,3 @@ def max_drawdown(pnl):
     drawdown = 0
 
     return drawdown
-
-@jit(nopython = True)
-def get_statistics():
-    """
-    Returns Backtest Statistics
-    1. Max Drawdown
-    2. Calmar Ratio
-    3. Sharpe Ratio
-    4. Sortino Ratio
-    """
-
-    return 0

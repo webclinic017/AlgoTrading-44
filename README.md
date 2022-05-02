@@ -30,6 +30,11 @@ Feature Set:
 
 4. Alpha Generation
 
+    - Calmar Ratio
+    - Max Drawdown
+    - Sharpe Ratio
+    - Sortino Ratio
+    
     - Monte Carlo Simuation
     - Statistical Arbitrage
 

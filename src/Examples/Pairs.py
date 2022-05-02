@@ -69,6 +69,4 @@ def pairs_backtest(ohlcA, ohlcB):
     plot_backtest_pnl(stats_list)
     plot_backtest_distribution(stats_list)
 
-    plt.show()
-
     return 0
