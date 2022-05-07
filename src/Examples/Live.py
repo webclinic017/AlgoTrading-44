@@ -4,7 +4,6 @@ from Data.Quotes import get_quote
 
 # Import Statistical Indicators Module
 from Indicators.Parameters import Parameters
-from Indicators.BollingerBands import get_bollinger_bands
 from Indicators.LeastSquares import get_least_squares
 from Indicators.DecisionTree import get_decision_tree
 from Indicators.Ridge import get_ridge

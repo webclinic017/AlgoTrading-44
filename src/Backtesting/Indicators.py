@@ -51,11 +51,15 @@ class Indicators:
 ##################
 
 spec = [
-    ('moving_average', float64[:]),
+    ('moving_averageA', float64[:]),
+    ('moving_averageB', float64[:]),
     ('volatility', float64[:]),
     ('volatility_cluster', float64[:]),
     ('vol_of_vol', float64[:]),
     ('vol_of_vol_cluster', float64[:]),
+    ('corr', float64[:]),
+    ('corr_vol', float64[:]),
+    ('corr_vol_cluster', float64[:]),
     ('long_cluster', int64),
     ('short_cluster', int64)
 ]
@@ -81,8 +85,9 @@ class PairsIndicators:
     1. Returns Initialied Object
     """
 
-    def __init__(self, moving_average, volatility, volatility_cluster, vol_vol, vol_vol_cluster, corr, corr_vol, corr_vol_cluster, long_cluster, short_cluster):
-        self.moving_average = moving_average
+    def __init__(self, moving_averageA, moving_averageB, volatility, volatility_cluster, vol_vol, vol_vol_cluster, corr, corr_vol, corr_vol_cluster, long_cluster, short_cluster):
+        self.moving_averageA = moving_averageA
+        self.moving_averageB = moving_averageB
         self.volatility = volatility 
         self.volatility_cluster = volatility_cluster
         self.vol_of_vol = vol_vol

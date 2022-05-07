@@ -4,7 +4,6 @@ from Data.Historical import get_historical_data
 
 # Import Statistical Indicators Module
 from Indicators.Parameters import Parameters
-from Indicators.BollingerBands import get_bollinger_bands
 from Indicators.LeastSquares import get_least_squares
 from Indicators.DecisionTree import get_decision_tree
 from Indicators.Ridge import get_ridge
@@ -25,7 +24,7 @@ if __name__ == "__main__":
 
     def main():
 
-        isDisplay = False
+        isDisplay = True
 
         # Semiconductor Stocks
         # tickers = np.array(["MU", "NVDA", "AMD", "QCOM", "INTC", "AMAT", "TXN", "LRCX", "TSM", "AVGO"])
@@ -48,22 +47,22 @@ if __name__ == "__main__":
 
             rolling_period = 10
             projection = 0
-            individual_backtest(ohlcA, rolling_period, projection, isDisplay)
-            print(tickers[i], ": Backtest Complete. ")
+            # individual_backtest(ohlcA, rolling_period, projection, isDisplay)
+            # print(tickers[i], ": Backtest Complete. ")
 
-            # ticker = "TXN"
-            # client = Client(endpoint, api_key, accountid, ticker, months)
-            # ohlcB = get_historical_data(client)
-            # pairs_backtest(ohlcA, ohlcB)
+            ticker = "TXN"
+            client = Client(endpoint, api_key, accountid, ticker, months)
+            ohlcB = get_historical_data(client)
+            pairs_backtest(ohlcA, ohlcB, isDisplay)
 
-            lower = 5
-            upper = 90
-            optimized_backtest(ohlcA, lower, upper, get_least_squares, projection, isDisplay)
-            print(tickers[i], ": Optimization Complete. ")
+            # lower = 5
+            # upper = 90
+            # optimized_backtest(ohlcA, lower, upper, get_least_squares, projection, isDisplay)
+            # print(tickers[i], ": Optimization Complete. ")
 
             print("Limiting API Calls")
             print("Sleeping...")
-            time.sleep(5)
+            time.sleep(2)
             break
 
         # Limit Number of Charts

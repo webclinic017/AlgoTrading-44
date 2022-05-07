@@ -14,7 +14,6 @@ Feature Set:
 
 3. Advanced Statistical Indicators
 
-    - Bollinger Bands
     - Decision Tree Moving Average
     - Ridge Regression Moving Average
     - Ordinary Least Squares Moving Average
@@ -30,10 +29,11 @@ Feature Set:
 
 4. Alpha Generation
 
-    - Calmar Ratio
     - Max Drawdown
+    - Calmar Ratio
     - Sharpe Ratio
     - Sortino Ratio
+    - Treynor Ratio
     
     - Monte Carlo Simuation
     - Statistical Arbitrage

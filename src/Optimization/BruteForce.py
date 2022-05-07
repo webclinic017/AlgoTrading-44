@@ -2,8 +2,8 @@ import numpy as np
 
 # Import Backtesting Module
 from Backtesting.Indicators import Indicators
-from Backtesting.Statistics import Statistics
-from Backtesting.Backtest import get_vanilla_backtest, get_bands_backtest
+from Backtesting.Variables import Statistics
+from Backtesting.Backtest import get_vanilla_backtest
 
 # Import Volatility Module
 from Volatility.VolClusters import get_vol_clusters

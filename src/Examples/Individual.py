@@ -1,14 +1,14 @@
 # Import Backtesting Module
 from Backtesting.Indicators import Indicators
-from Backtesting.Statistics import Statistics
-from Backtesting.Backtest import get_vanilla_backtest, get_bands_backtest
+from Backtesting.Variables import Statistics
+from Backtesting.Backtest import get_vanilla_backtest
+from Backtesting.Statistics import get_statistics
 
 # Import Volatility Module
 from Volatility.VolClusters import get_vol_clusters
 
 # Import Statistical Indicators Module
 from Indicators.Parameters import Parameters
-from Indicators.BollingerBands import get_bollinger_bands
 from Indicators.LeastSquares import get_least_squares
 from Indicators.DecisionTree import get_decision_tree
 from Indicators.Ridge import get_ridge
@@ -16,7 +16,7 @@ from Indicators.BayesRidge import get_bayes_ridge
 
 # Import Helper Methods Module
 from HelperMethods.Helpers import print_results
-from HelperMethods.Helpers import plot_backtest_pnl, plot_backtest_distribution
+from HelperMethods.Helpers import plot_backtest_pnl, plot_backtest_distribution, plot_performance_statistics
 
 from .Volatility import plot_vol_metrics
 
@@ -67,10 +67,14 @@ def individual_backtest(ohlc, rolling_period, projection, isDisplay):
     names_list = ["Least Squares Open", "Least Squares High", "Least Squares Low", "Least Squares Close"]
     print_results(stats_list, names_list)
 
+    # Performance Statistics
+    PS = get_statistics(close, least_squares_close.pnl, rolling_period)    
+
     # Final Step !!!
     # Visualize Backtest Results
     if isDisplay == True:
         plot_backtest_pnl(stats_list)
         plot_backtest_distribution(stats_list)
+        plot_performance_statistics(PS)
 
     return 0 

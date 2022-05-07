@@ -105,3 +105,21 @@ def plot_optimized_backtest_results(open, high, low, close, interval):
     ax4.set_title("Daily Close")
 
     return 0
+
+def plot_performance_statistics(PS):
+
+    fig, (ax1, ax2) = plt.subplots(2, 1)
+    fig.suptitle("Backtesting Engine")
+
+    ax1.plot(PS.sharpe_ratio, label = "Sharpe")
+    ax1.plot(PS.sortino_ratio, label = "Sortino")
+    ax1.plot(PS.calmar_ratio, label = "Calmar")
+    ax1.plot(PS.treynor_ratio, label = "Treynor")
+    ax1.legend(loc = 'best')
+
+    ax2.plot(PS.benchmark_drawdown, label = "Benchmark")
+    ax2.plot(PS.backtest_drawdown, label = "Backtest")
+    ax2.set_title("Max Drawdown")
+    ax2.legend(loc = 'best')
+
+    return 0
