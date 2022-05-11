@@ -25,9 +25,7 @@ if __name__ == "__main__":
     def main():
 
         isDisplay = True
-
-        # Semiconductor Stocks
-        # tickers = np.array(["MU", "NVDA", "AMD", "QCOM", "INTC", "AMAT", "TXN", "LRCX", "TSM", "AVGO"])
+        isContrarian = False
 
         # Multidimensional Array
         tickers = get_ticker_symbols()
@@ -38,7 +36,7 @@ if __name__ == "__main__":
             endpoint = "sandbox.tradier.com"
             api_key = "0qoGJZUqxFSc7zcBcAENRphluKVn"
             accountid = 0
-            ticker = tickers[i]
+            ticker = "SPY"
             months = 60
             client = Client(endpoint, api_key, accountid, ticker, months)
 
@@ -47,17 +45,18 @@ if __name__ == "__main__":
 
             rolling_period = 10
             projection = 0
-            # individual_backtest(ohlcA, rolling_period, projection, isDisplay)
+            # individual_backtest(ohlcA, rolling_period, projection, isDisplay, isContrarian)
             # print(tickers[i], ": Backtest Complete. ")
 
-            ticker = "TXN"
+            ticker = "QQQ"
             client = Client(endpoint, api_key, accountid, ticker, months)
             ohlcB = get_historical_data(client)
-            pairs_backtest(ohlcA, ohlcB, isDisplay)
+            pairs_backtest(ohlcA, ohlcB, isDisplay, isContrarian)
 
             # lower = 5
             # upper = 90
-            # optimized_backtest(ohlcA, lower, upper, get_least_squares, projection, isDisplay)
+            # isDisplay = False
+            # optimized_backtest(ohlcA, lower, upper, get_least_squares, projection, isDisplay, isContrarian)
             # print(tickers[i], ": Optimization Complete. ")
 
             print("Limiting API Calls")

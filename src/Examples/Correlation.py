@@ -30,12 +30,25 @@ def plot_corr_metrics(ohlcA, ohlcB, par):
 
 def plot_pairs_testing(ohlcA, ohlcB):
 
-    a, b, reg = get_correlations(ohlcA, ohlcB)
+    a, b, ls, r, dt, br = get_correlations(ohlcA, ohlcB)
 
-    fig, (ax1, ax2) = plt.subplots(2, 1)
+    fig, ((ax1, ax2), (ax3, ax4)) = plt.subplots(2, 2)
+    fig.suptitle("Regression Lab")
 
-    ax1.scatter(a, b)
-    ax1.plot(a, reg)
-    ax1.set_title("Regression Prediction")
+    ax1.scatter(a, b, marker = 'x', color = 'red')
+    ax1.plot(a, ls)
+    ax1.set_title("Least Squares Regression")
+
+    ax2.scatter(a, b, marker = 'x', color = 'red')
+    ax2.plot(a, r)
+    ax2.set_title("Ridge Regression")
+
+    ax3.scatter(a, b, marker = 'x', color = 'red')
+    ax3.plot(a, dt)
+    ax3.set_title("Decision Tree Regression")
+
+    ax4.scatter(a, b, marker = 'x', color = 'red')
+    ax4.plot(a, br)
+    ax4.set_title("Bayes Ridge Regression")
 
     return 0

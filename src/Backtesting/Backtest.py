@@ -22,7 +22,7 @@ def get_short_pnl(entry, exit):
     return pnl
 
 @jit(nopython = True)
-def get_vanilla_backtest(stats, prices, indicatorObj, period, isContrarian):
+def get_vanilla_backtest(stats, prices, indicatorObj, isContrarian):
     """
     Returns the Profit / Loss of a Selected Indicator
 
@@ -62,8 +62,8 @@ def get_vanilla_backtest(stats, prices, indicatorObj, period, isContrarian):
 
             # Enter Long Position
             price = prices[i] > indicatorObj.moving_average[i]
-            vol = indicatorObj.volatility[i] > indicatorObj.volatility_cluster[indicatorObj.long_cluster]
-            vol_vol = indicatorObj.vol_of_vol[i] > indicatorObj.vol_of_vol_cluster[indicatorObj.long_cluster]
+            vol = indicatorObj.volatility[i] < indicatorObj.volatility_cluster[indicatorObj.long_cluster]
+            vol_vol = indicatorObj.vol_of_vol[i] < indicatorObj.vol_of_vol_cluster[indicatorObj.long_cluster]
 
             # Evaluate Long Entry Logic
             if (price and vol and vol_vol) and (long_position == False and short_position == False):
@@ -88,8 +88,8 @@ def get_vanilla_backtest(stats, prices, indicatorObj, period, isContrarian):
 
             # Enter Short Position
             price = prices[i] < indicatorObj.moving_average[i]
-            vol = indicatorObj.volatility[i] < indicatorObj.volatility_cluster[indicatorObj.short_cluster]
-            vol_vol = indicatorObj.vol_of_vol[i] < indicatorObj.vol_of_vol_cluster[indicatorObj.short_cluster]
+            vol = indicatorObj.volatility[i] > indicatorObj.volatility_cluster[indicatorObj.short_cluster]
+            vol_vol = indicatorObj.vol_of_vol[i] > indicatorObj.vol_of_vol_cluster[indicatorObj.short_cluster]
 
             # Evaluate Short Entry Logic
             if (price and vol and vol_vol) and (long_position == False and short_position == False):
@@ -185,6 +185,8 @@ def get_vanilla_backtest(stats, prices, indicatorObj, period, isContrarian):
                 stats.pnl[i] = stats.pnl[i - 1]
 
     return stats
+
+
 
 
 

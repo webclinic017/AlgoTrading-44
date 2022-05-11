@@ -22,7 +22,7 @@ def get_short_pnl(entry, exit):
     return pnl
 
 @jit(nopython = True)
-def get_pairs_backtest(stats, pricesA, indicatorA, pricesB, indicatorB, contrarian):
+def get_pairs_backtest(stats, pricesA, pricesB, indicatorObj, contrarian):
     """
     Returns the Profit / Loss of a Selected Indicator and Correlated Pairs
 
@@ -58,7 +58,17 @@ def get_pairs_backtest(stats, pricesA, indicatorA, pricesB, indicatorB, contrari
             stats.benchmark[i] = stats.benchmark[i - 1] + (pricesA[i] - pricesA[i - 1]) * stats.lot_size * 2
 
             # Enter Long Position A, Short B
-            if (pricesA[i] > indicatorA[i] and pricesB[i] < indicatorB[i]) and (longA == False and shortA == False) and (longB == False and shortB == False):
+            priceA = pricesA[i] > indicatorObj.moving_averageA[i]
+            volA = indicatorObj.volatilityA[i] < indicatorObj.volatility_clusterA[indicatorObj.long_cluster]
+            vol_volA = indicatorObj.vol_of_volA[i] < indicatorObj.vol_of_vol_clusterA[indicatorObj.long_cluster]
+
+            priceB = pricesB[i] < indicatorObj.moving_averageB[i]
+            volB = indicatorObj.volatilityA[i] > indicatorObj.volatility_clusterB[indicatorObj.short_cluster]
+            vol_volB = indicatorObj.vol_of_volA[i] > indicatorObj.vol_of_vol_clusterB[indicatorObj.short_cluster]
+
+            corr = indicatorObj.corr[i] < indicatorObj.corr_cluster[indicatorObj.long_cluster]
+
+            if (priceA and (volA or vol_volA) and priceB and (volB or vol_volB) and corr) and (longA == False and shortA == False) and (longB == False and shortB == False):
                 long_entry = pricesA[i]
                 short_entry = pricesB[i]
                 longA = True
@@ -66,7 +76,10 @@ def get_pairs_backtest(stats, pricesA, indicatorA, pricesB, indicatorB, contrari
                 stats.trade_count+=1
 
             # Exit Long Position A, Short B
-            if (pricesA[i] < indicatorA[i] and pricesB[i] > indicatorB[i]) and (longA == True and shortA == False) and (longB == False and shortB == True):
+            priceA = pricesA[i] < indicatorObj.moving_averageA[i]
+            priceB = pricesB[i] > indicatorObj.moving_averageB[i]
+
+            if (priceA and priceB) and (longA == True and shortA == False) and (longB == False and shortB == True):
                 long_exit = pricesA[i]
                 short_exit = pricesB[i]
                 longA = False
@@ -78,7 +91,17 @@ def get_pairs_backtest(stats, pricesA, indicatorA, pricesB, indicatorB, contrari
                     stats.win_rate+=1
 
             # Enter Short Position A, Long B
-            if (pricesA[i] < indicatorA[i] and pricesB[i] > indicatorB[i]) and (longA == False and shortA == False) and (longB == False and shortB == False):
+            priceA = pricesA[i] < indicatorObj.moving_averageA[i]
+            volA = indicatorObj.volatilityA[i] > indicatorObj.volatility_clusterA[indicatorObj.short_cluster]
+            vol_volA = indicatorObj.vol_of_volA[i] > indicatorObj.vol_of_vol_clusterA[indicatorObj.short_cluster]
+
+            priceB = pricesB[i] > indicatorObj.moving_averageB[i]
+            volB = indicatorObj.volatilityA[i] < indicatorObj.volatility_clusterB[indicatorObj.long_cluster]
+            vol_volB = indicatorObj.vol_of_volA[i] < indicatorObj.vol_of_vol_clusterB[indicatorObj.long_cluster]
+
+            corr = indicatorObj.corr[i] < indicatorObj.corr_cluster[indicatorObj.long_cluster]
+
+            if (priceA and (volA or vol_volA) and priceB and (volB or vol_volB) and corr) and (longA == False and shortA == False) and (longB == False and shortB == False):
                 long_entry = pricesB[i]
                 short_entry = pricesA[i]
                 longB = True
@@ -86,7 +109,10 @@ def get_pairs_backtest(stats, pricesA, indicatorA, pricesB, indicatorB, contrari
                 stats.trade_count+=1
 
             # Exit Short Position A, Long B
-            if (pricesA[i] < indicatorA[i] and pricesB[i] > indicatorB[i]) and (longA == False and shortA == True) and (longB == True and shortA == False):
+            priceA = pricesA[i] > indicatorObj.moving_averageA[i]
+            priceB = pricesB[i] < indicatorObj.moving_averageB[i]
+
+            if (priceA and priceB) and (longA == False and shortA == True) and (longB == True and shortA == False):
                 long_exit = pricesB[i]
                 short_exit = pricesA[i]
                 longB = False
@@ -112,7 +138,17 @@ def get_pairs_backtest(stats, pricesA, indicatorA, pricesB, indicatorB, contrari
             stats.benchmark[i] = stats.benchmark[i - 1] + (pricesA[i] - pricesA[i - 1]) * stats.lot_size * 2
 
             # Enter Long Position A, Short B
-            if (pricesA[i] < indicatorA[i] and pricesB[i] > indicatorB[i]) and (longA == False and shortA == False) and (longB == False and shortB == False):
+            priceA = pricesA[i] < indicatorObj.moving_averageA[i]
+            volA = indicatorObj.volatilityA[i] < indicatorObj.volatility_clusterA[indicatorObj.long_cluster]
+            vol_volA = indicatorObj.vol_of_volA[i] < indicatorObj.vol_of_vol_clusterA[indicatorObj.long_cluster]
+
+            priceB = pricesB[i] > indicatorObj.moving_averageB[i]
+            volB = indicatorObj.volatilityA[i] > indicatorObj.volatility_clusterB[indicatorObj.short_cluster]
+            vol_volB = indicatorObj.vol_of_volA[i] > indicatorObj.vol_of_vol_clusterB[indicatorObj.short_cluster]
+
+            corr = indicatorObj.corr[i] < indicatorObj.corr_cluster[indicatorObj.long_cluster]
+
+            if ((priceA or (volA or vol_volA)) or (priceB or (volB or vol_volB)) and corr) and (longA == False and shortA == False) and (longB == False and shortB == False):
                 long_entry = pricesA[i]
                 short_entry = pricesB[i]
                 longA = True
@@ -120,7 +156,10 @@ def get_pairs_backtest(stats, pricesA, indicatorA, pricesB, indicatorB, contrari
                 stats.trade_count+=1
 
             # Exit Long Position A, Short B
-            if (pricesA[i] > indicatorA[i] and pricesB[i] < indicatorB[i]) and (longA == True and shortA == False) and (longB == False and shortB == True):
+            priceA = pricesA[i] > indicatorObj.moving_averageA[i]
+            priceB = pricesB[i] < indicatorObj.moving_averageB[i]
+
+            if (priceA and priceB) and (longA == True and shortA == False) and (longB == False and shortB == True):
                 long_exit = pricesA[i]
                 short_exit = pricesB[i]
                 longA = False
@@ -131,7 +170,17 @@ def get_pairs_backtest(stats, pricesA, indicatorA, pricesB, indicatorB, contrari
                     stats.win_rate+=1
 
             # Enter Short Position A, Long B
-            if (pricesA[i] > indicatorA[i] and pricesB[i] < indicatorB[i]) and (longA == False and shortA == False) and (longB == False and shortB == False):
+            priceA = pricesA[i] > indicatorObj.moving_averageA[i]
+            volA = indicatorObj.volatilityA[i] > indicatorObj.volatility_clusterA[indicatorObj.short_cluster]
+            vol_volA = indicatorObj.vol_of_volA[i] > indicatorObj.vol_of_vol_clusterA[indicatorObj.short_cluster]
+
+            priceB = pricesB[i] < indicatorObj.moving_averageB[i]
+            volB = indicatorObj.volatilityA[i] < indicatorObj.volatility_clusterB[indicatorObj.long_cluster]
+            vol_volB = indicatorObj.vol_of_volA[i] < indicatorObj.vol_of_vol_clusterB[indicatorObj.long_cluster]
+
+            corr = indicatorObj.corr[i] < indicatorObj.corr_cluster[indicatorObj.long_cluster]
+
+            if ((priceA or (volA or vol_volA)) or (priceB or (volB or vol_volB)) and corr) and (longA == False and shortA == False) and (longB == False and shortB == False):
                 long_entry = pricesB[i]
                 short_entry = pricesA[i]
                 longB = True
@@ -139,7 +188,10 @@ def get_pairs_backtest(stats, pricesA, indicatorA, pricesB, indicatorB, contrari
                 stats.trade_count+=1
 
             # Exit Short Position A, Long B
-            if (pricesA[i] < indicatorA[i] and pricesB[i] > indicatorB[i]) and (longA == False and shortA == True) and (longB == True and shortB == False):
+            priceA = pricesA[i] < indicatorObj.moving_averageA[i]
+            priceB = pricesB[i] > indicatorObj.moving_averageB[i]
+
+            if (priceA and priceB) and (longA == False and shortA == True) and (longB == True and shortB == False):
                 long_exit = pricesB[i]
                 short_exit = pricesA[i]
                 longB = False
@@ -157,3 +209,7 @@ def get_pairs_backtest(stats, pricesA, indicatorA, pricesB, indicatorB, contrari
                 stats.pnl[i] = stats.pnl[i - 1]
 
     return stats
+
+
+
+

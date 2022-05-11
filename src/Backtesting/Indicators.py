@@ -53,12 +53,17 @@ class Indicators:
 spec = [
     ('moving_averageA', float64[:]),
     ('moving_averageB', float64[:]),
-    ('volatility', float64[:]),
-    ('volatility_cluster', float64[:]),
-    ('vol_of_vol', float64[:]),
-    ('vol_of_vol_cluster', float64[:]),
+    ('volatilityA', float64[:]),
+    ('volatility_clusterA', float64[:]),
+    ('vol_of_volA', float64[:]),
+    ('vol_of_vol_clusterA', float64[:]),
+    ('volatilityB', float64[:]),
+    ('volatility_clusterB', float64[:]),
+    ('vol_of_volB', float64[:]),
+    ('vol_of_vol_clusterB', float64[:]),
     ('corr', float64[:]),
     ('corr_vol', float64[:]),
+    ('corr_cluster', float64[:]),
     ('corr_vol_cluster', float64[:]),
     ('long_cluster', int64),
     ('short_cluster', int64)
@@ -85,16 +90,26 @@ class PairsIndicators:
     1. Returns Initialied Object
     """
 
-    def __init__(self, moving_averageA, moving_averageB, volatility, volatility_cluster, vol_vol, vol_vol_cluster, corr, corr_vol, corr_vol_cluster, long_cluster, short_cluster):
+    def __init__(self, moving_averageA, moving_averageB, volatilityA, volatility_clusterA, vol_volA, vol_vol_clusterA, volatilityB, volatility_clusterB, vol_volB, vol_vol_clusterB, corr, corr_cluster, corr_vol, corr_vol_cluster, long_cluster, short_cluster):
         self.moving_averageA = moving_averageA
         self.moving_averageB = moving_averageB
-        self.volatility = volatility 
-        self.volatility_cluster = volatility_cluster
-        self.vol_of_vol = vol_vol
-        self.vol_of_vol_cluster = vol_vol_cluster
+
+        self.volatilityA = volatilityA 
+        self.volatility_clusterA = volatility_clusterA
+        self.vol_of_volA = vol_volA
+        self.vol_of_vol_clusterA = vol_vol_clusterA
+
+        self.volatilityB = volatilityB 
+        self.volatility_clusterB = volatility_clusterB
+        self.vol_of_volB = vol_volB
+        self.vol_of_vol_clusterB = vol_vol_clusterB
+
         self.corr = corr 
+        self.corr_cluster = corr_cluster
+
         self.corr_vol = corr_vol
         self.corr_vol_cluster = corr_vol_cluster
+
         self.long_cluster = long_cluster
         self.short_cluster = short_cluster
 

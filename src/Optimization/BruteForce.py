@@ -13,7 +13,7 @@ from Indicators.Parameters import Parameters
 
 from Examples.Volatility import plot_vol_metrics
 
-def brute_force_optimization(a, b, ohlc, indicator, projection):
+def brute_force_optimization(a, b, ohlc, indicator, projection, isContrarian):
     """
     Returns the PnL of an interval of rolling periods
 
@@ -56,11 +56,10 @@ def brute_force_optimization(a, b, ohlc, indicator, projection):
         indicator_low = Statistics(lot_size, len(low[period:]), period)
         indicator_close = Statistics(lot_size, len(close[period:]), period)
 
-        isContrarian = False
-        indicator_open = get_vanilla_backtest(indicator_open, open[period:], IndicatorsObj, period, isContrarian)
-        indicator_high = get_vanilla_backtest(indicator_high, high[period:], IndicatorsObj, period, isContrarian)
-        indicator_low = get_vanilla_backtest(indicator_low, low[period:], IndicatorsObj, period, isContrarian)
-        indicator_close = get_vanilla_backtest(indicator_close, close[period:], IndicatorsObj, period, isContrarian)
+        indicator_open = get_vanilla_backtest(indicator_open, open[period:], IndicatorsObj, isContrarian)
+        indicator_high = get_vanilla_backtest(indicator_high, high[period:], IndicatorsObj, isContrarian)
+        indicator_low = get_vanilla_backtest(indicator_low, low[period:], IndicatorsObj, isContrarian)
+        indicator_close = get_vanilla_backtest(indicator_close, close[period:], IndicatorsObj, isContrarian)
 
         open_pnl[i] = np.sum(indicator_open.trade_results)
         high_pnl[i] = np.sum(indicator_high.trade_results)
